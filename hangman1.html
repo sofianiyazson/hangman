@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <html>
+    <head>
+      <meta charset="utf-8" />
+      <title>Hangman!</title>
+    </head>
+    <body>
+      <script>
+        var words = [
+          "Programmering",
+          "Studenter",
+          "Afterwork",
+          "Stockholm",
+          "Javascript",
+        ];
+        var lives = 5;
+
+        // pick a random word from words array
+        var word = words[Math.floor(Math.random() * words.length)];
+
+        // set up the answer array to show how many letters in a word using _`s
+        var answerArray = [];
+        for (var i = 0; i < word.length; i++) {
+          answerArray[i] = "_";
+        }
+
+        // create a variable to hold the number of remaining letters to be guessed
+        var remainingLetters = word.length;
+
+        // while there are letters left to be guessed
+        while (remainingLetters > 0) {
+          
+
+          // get a guess from the player
+          var guess = prompt(
+            answerArray.join(" ") + " \n \n " + "lives: " + lives + "\n"
+          );
+
+          // if the guess is blank
+          if (guess == null) {
+            // exit the game loop
+            break;
+            //if the guess is more than one letter or no letters
+          } else if (guess.length !== 1) {
+            // alert them to guess single letter only
+            alert("Please enter single letter.");
+            // valid guess
+          } else {
+            // update the game state with the guess
+            var correctAns = false;
+            for (var j = 0; j < word.length; j++) {
+              // if the letter they guessed is in the word
+              if (word[j] === guess) {
+                // update the answer array with the letter they guessed
+                answerArray[j] = guess;
+                // subtract one from remaining letters
+                remainingLetters--;
+                correctAns = true;
+              }
+            }
+            if (!correctAns) lives--;
+          }
+
+          // check if the player lost all lives
+          if (lives === 0) {
+            alert("You have lost! The correct word was " + word);
+            // ending the game loop
+            break;
+          }
+        }
+        // end of the game loop
+
+
+        //congrat the player
+        // if the player still has lives left
+        if (lives > 0) alert("Good job! The answer was " + word);
+      </script>
+    </body>
+  </html>
+</html>
